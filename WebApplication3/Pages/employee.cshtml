@@ -1,0 +1,649 @@
+﻿@* @page
+@using WebApplication6.Pages
+@model employeeModel
+@{
+    ViewData["Title"] = "الصفحة الرئيسية";
+}
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جدول الموظفين</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #e3f2fd; /* Light blue background */
+            direction: rtl;
+        }
+
+        .intro {
+            padding-top: 30px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .table-container {
+            max-width: 100%;
+            margin: auto;
+        }
+
+        .table thead th {
+            background-color: #0d47a1; /* Dark blue for header */
+            color: #ffffff;
+            border-bottom: 2px solid #0a3d91;
+        }
+
+        .table tbody tr {
+            transition: background-color 0.2s;
+        }
+
+            .table tbody tr:nth-child(even) {
+                background-color: #e1f5fe; /* Very light blue for even rows */
+            }
+
+            .table tbody tr:hover {
+                background-color: #bbdefb; /* Light blue on hover */
+            }
+
+        .actions-col {
+            white-space: nowrap;
+            width: 1%;
+        }
+
+        .btn {
+            font-size: 0.85rem;
+            padding: 0.3rem 0.6rem;
+            display: inline-block;
+        }
+
+            .btn + .btn {
+                margin-left: 0.3rem;
+            }
+
+        .date-col {
+            width: 10%;
+        }
+
+        .btn-success {
+            background-color: #0277bd; /* Blue for Accept button */
+            border-color: #0277bd;
+        }
+
+        .btn-danger {
+            background-color: #b71c1c; /* Red for Reject button */
+            border-color: #b71c1c;
+        }
+
+        .btn-add {
+            background-color: #0277bd; /* Blue for Add button */
+            border-color: #0277bd;
+            color: #fff;
+        }
+
+            .btn-add:hover {
+                background-color: #01579b;
+                border-color: #01579b;
+            }
+    </style>
+</head>
+<body>
+    <h1>@Model.employees</h1>
+    @await Html.PartialAsync("searchbar")
+
+    <section class="intro">
+        <div class="bg-image h-100">
+            <div class="mask d-flex align-items-center h-100">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12 table-container">
+                            <div class="card shadow-2-strong">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-borderless mb-0">
+                                            <thead class="text-center">
+                                                <tr>
+                                                    <th scope="col">اسم الموظف</th>
+                                                    <th scope="col">رقم الموظف</th>
+                                                    <th scope="col">العمر</th>
+                                                    <th scope="col">ساعات العمل</th>
+                                                    <th scope="col">أيام العمل</th>
+                                                    <th scope="col">العنوان</th>
+                                                    <th scope="col">رقم هاتف الموظف</th>
+                                                    <th scope="col">الحوافز/الخصومات</th>
+                                                    <th scope="col">الإجازات المتبقية</th>
+                                                    <th scope="col">القسم</th>
+                                                    <th scope="col">رقم القسم</th>
+                                                    <th scope="col">المرتب</th>
+                                                    <th scope="col">الإجراءات</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="text-center">
+                                                <tr>
+                                                    <td>أحمد علي</td>
+                                                    <td>2211223</td>
+                                                    <td>15</td>
+                                                    <td>4</td>
+                                                    <td>7</td>
+                                                    <td>12 شارع</td>
+                                                    <td>0112211223</td>
+                                                    <td>حافز</td>
+                                                    <td>4</td>
+                                                    <td>صناعة الأدوية</td>
+                                                    <td>D-001</td>
+                                                    <td>3000</td>
+                                                    <td class="actions-col">
+                                                        <button class="btn btn-success btn-sm">تعديل</button>
+                                                        <button class="btn btn-danger btn-sm">حذف</button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="text-center">
+                                        <button class="btn btn-add">إضافة موظف جديد</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+<h1>@Model.dt</h1>
+ *@
+
+@* 
+@page
+@model WebApplication6.Pages.employeeModel
+@{
+    ViewData["Title"] = "جدول الموظفين";
+}
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جدول الموظفين</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <section class="intro">
+        <div class="container">
+            <div class="card shadow-2-strong">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-borderless mb-0">
+                            <thead class="text-center">
+                                <tr>
+                                    <th>اسم الموظف</th>
+                                    <th>رقم الموظف</th>
+                                    <th>العمر</th>
+                                    <th>ساعات العمل</th>
+                                    <th>أيام العمل</th>
+                                    <th>العنوان</th>
+                                    <th>رقم هاتف الموظف</th>
+                                    <th>الحوافز/الخصومات</th>
+                                    <th>اسم القسم</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                @if (Model.dt != null && Model.dt.Rows.Count > 0)
+                                {
+                                    foreach (System.Data.DataRow row in Model.dt.Rows)
+                                    {
+                                        <tr>
+                                            <td>@($"{row["FName"]} {row["LName"]}")</td>
+                                            <td>@row["ID"]</td>
+                                            <td>@row["age"]</td>
+                                            <td>@row["Workinghours"]</td>
+                                            <td>@row["Workingdays"]</td>
+                                            <td>@row["EAddress"]</td>
+                                            <td>@row["phonenumber"]</td>
+                                            <td>@row["bonus"]</td>
+                                            <td>@row["DepartmentName"]</td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="9">لا توجد بيانات لعرضها</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+ *@
+@* @page
+@model WebApplication6.Pages.employeeModel
+@{
+    ViewData["Title"] = "جدول الموظفين";
+}
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جدول الموظفين</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Cairo', sans-serif;
+        }
+        .table th, .table td {
+            vertical-align: middle;
+        }
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn-custom:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <section class="container mt-5">
+        <div class="card shadow-sm">
+            <div class="card-header text-center bg-primary text-white">
+                <h4>جدول الموظفين</h4>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-end mb-3">
+                    <button class="btn btn-custom me-2" onclick="addEmployee()">إضافة موظف</button>
+                    <button class="btn btn-danger" onclick="deleteAll()">حذف الكل</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered text-center">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>اسم الموظف</th>
+                                <th>رقم الموظف</th>
+                                <th>العمر</th>
+                                <th>ساعات العمل</th>
+                                <th>أيام العمل</th>
+                                <th>العنوان</th>
+                                <th>رقم الهاتف</th>
+                                <th>الحوافز/الخصومات</th>
+                                <th>القسم</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.dt != null && Model.dt.Rows.Count > 0)
+                            {
+                                foreach (System.Data.DataRow row in Model.dt.Rows)
+                                {
+                                    <tr>
+                                        <td>@($"{row["FName"]} {row["LName"]}")</td>
+                                        <td>@row["ID"]</td>
+                                        <td>@row["age"]</td>
+                                        <td>@row["Workinghours"]</td>
+                                        <td>@row["Workingdays"]</td>
+                                        <td>@row["EAddress"]</td>
+                                        <td>@row["phonenumber"]</td>
+                                        <td>@row["bonus"]</td>
+                                        <td>@row["DepartmentName"]</td>
+                                        <td>
+                                            <button class="btn btn-warning btn-sm me-1" onclick="editEmployee(@row["ID"])">تعديل</button>
+                                            <button class="btn btn-danger btn-sm" onclick="deleteEmployee(@row["ID"])">حذف</button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="10">لا توجد بيانات لعرضها</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function addEmployee() {
+            alert("إضافة موظف جديد!");
+            // يمكن توجيه المستخدم إلى صفحة إضافة موظف
+            window.location.href = "/AddEmployee";
+        }
+
+        function editEmployee(employeeId) {
+            alert("تعديل الموظف برقم: " + employeeId);
+            // يمكن توجيه المستخدم إلى صفحة تعديل موظف
+            window.location.href = `/EditEmployee?id=${employeeId}`;
+        }
+
+        function deleteEmployee(employeeId) {
+            if (confirm("هل أنت متأكد من حذف الموظف؟")) {
+                alert("تم حذف الموظف برقم: " + employeeId);
+                // استدعاء API أو تنفيذ حذف الموظف
+            }
+        }
+
+        function deleteAll() {
+            if (confirm("هل أنت متأكد من حذف جميع الموظفين؟")) {
+                alert("تم حذف جميع الموظفين!");
+                // استدعاء API أو تنفيذ حذف جميع الموظفين
+            }
+        }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> *@
+
+@page
+@model WebApplication3.Pages.employeeModel
+@{
+    ViewData["Title"] = "جدول الموظفين";
+}
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جدول الموظفين</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .table th, .table td {
+            vertical-align: middle;
+        }
+
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+        }
+
+            .btn-custom:hover {
+                background-color: #0056b3;
+                color: white;
+            }
+
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            right: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+            .sidenav a {
+                padding: 8px 8px 8px 32px;
+                text-decoration: none;
+                font-size: 25px;
+                color: #818181;
+                display: block;
+                transition: 0.3s;
+            }
+
+                .sidenav a:hover {
+                    color: #f1f1f1;
+                }
+
+            .sidenav .closebtn {
+                position: absolute;
+                top: 0;
+                right: 25px;
+                font-size: 36px;
+                margin-right: 50px;
+            }
+
+        .toggle_icon {
+            cursor: pointer;
+        }
+
+            .toggle_icon img {
+                width: 30px;
+            }
+            .sidenav .closebtn {
+    </style>
+</head>
+<body>
+    <div class="header_section">
+        <div class="container">
+            <div class="containt_main">
+                @if (HttpContext.Session.GetInt32("ID") == 0 || HttpContext.Session.GetInt32("ID") == null)
+                {
+                    <div id="mySidenav" class="sidenav">
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                        <a href="/index">الصفحة الرئيسية</a>
+                    </div>
+                    <span class="toggle_icon" onclick="openNav()"><img src="images/toggle-icon.png"></span>
+                }
+                else
+                {
+                    if (HttpContext.Session.GetInt32("DID") == 50101)
+                    {
+                        <div id="mySidenav" class="sidenav">
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            <a href="/index">الصفحة الرئيسية</a>
+                            <a asp-page="/Personalinfo2">المعلومات الشخصية</a>
+                            <a href="/Stat">الاحصائيات</a>
+                            <a href="/transactions">العمليات</a>
+                            <a href="/C_info">معلومات الشركة</a>
+                            <a href="/employee">الموظفين</a>
+                            <a href="/product">الادوية</a>
+                            <a href="/requestdayoff">ايام الاجازة</a>
+                            <a href="/fin">المعلومات المالية</a>
+                        </div>
+                    }
+                    else if (HttpContext.Session.GetInt32("DID") == 5111)
+                    {
+                        <div id="mySidenav" class="sidenav">
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            <a href="/index">الصفحة الرئيسية</a>
+                            <a asp-page="/Personalinfo2">المعلومات الشخصية</a>
+                            <a href="/transactions">العمليات</a>
+                        </div>
+                    }
+                    else if (HttpContext.Session.GetInt32("DID") == 50106)
+                    {
+                        <div id="mySidenav" class="sidenav">
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            <a href="/index">الصفحة الرئيسية</a>
+                            <a asp-page="/Personalinfo2">المعلومات الشخصية</a>
+                            <a href="/fin">المعلومات المالية</a>
+                        </div>
+                    }
+                    else if (HttpContext.Session.GetInt32("DID") == 50102)
+                    {
+                        <div id="mySidenav" class="sidenav">
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            <a href="/index">الصفحة الرئيسية</a>
+                            <a asp-page="/Personalinfo2">المعلومات الشخصية</a>
+                            <a href="/transactions">العمليات</a>
+                        </div>
+                    }
+                    else if (HttpContext.Session.GetInt32("DID") == 50108)
+                    {
+                        <div id="mySidenav" class="sidenav">
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            <a href="/index">الصفحة الرئيسية</a>
+                            <a asp-page="/Personalinfo2">المعلومات الشخصية</a>
+                            <a href="/product">الادوية</a>
+                        </div>
+                    }
+                    <span class="toggle_icon" onclick="openNav()"><img src="images/toggle-icon.png"></span>
+                }
+            </div>
+        </div>
+    </div>
+
+    <section class="container mt-5">
+        <div class="card shadow-sm">
+            <div class="card-header text-center bg-primary text-white">
+                <h4>جدول الموظفين</h4>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-end mb-3">
+                    <!-- Trigger Modal -->
+                    <button class="btn btn-custom me-2" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">إضافة موظف</button>
+                    <button class="btn btn-danger" onclick="deleteAll()">حذف الكل</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered text-center">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>إجراءات</th>
+                                <th>القسم</th>
+                                <th>الحوافز/الخصومات</th>
+                                <th>رقم الهاتف</th>
+                                <th>العنوان</th>
+                                <th>أيام العمل</th>
+                                <th>ساعات العمل</th>
+                                <th>العمر</th>
+                                <th>رقم الموظف</th>
+                                <th>اسم الموظف</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.dt != null && Model.dt.Rows.Count > 0)
+                            {
+                                foreach (System.Data.DataRow row in Model.dt.Rows)
+                                {
+                                    <tr>
+                                        <td>
+                                            <button class="btn btn-warning btn-sm me-1" onclick="editEmployee(@row["ID"])">تعديل</button>
+                                            <button class="btn btn-danger btn-sm" onclick="deleteEmployee(@row["ID"])">حذف</button>
+                                        </td>
+                                        <td>@row["DepartmentName"]</td>
+                                        <td>@row["bonus"]</td>
+                                        <td>@row["phonenumber"]</td>
+                                        <td>@row["EAddress"]</td>
+                                        <td>@row["Workingdays"]</td>
+                                        <td>@row["Workinghours"]</td>
+                                        <td>@row["age"]</td>
+                                        <td>@row["ID"]</td>
+                                        <td>@($"{row["FName"]} {row["LName"]}")</td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="10">لا توجد بيانات لعرضها</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add Employee Modal -->
+    <div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addEmployeeModalLabel">إضافة موظف جديد</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="post">
+                    <div class="modal-body">
+                        <!-- First Name -->
+                        <div class="mb-3">
+                            <label for="FName" class="form-label">الاسم الأول</label>
+                            <input type="text" class="form-control" id="FName" name="User.FName" required>
+                        </div>
+                        <!-- Last Name -->
+                        <div class="mb-3">
+                            <label for="LName" class="form-label">اسم العائلة</label>
+                            <input type="text" class="form-control" id="LName" name="User.LName" required>
+                        </div>
+                        <!-- Age -->
+                        <div class="mb-3">
+                            <label for="Age" class="form-label">العمر</label>
+                            <input type="number" class="form-control" id="Age" name="User.Age" required>
+                        </div>
+                        <!-- Working Days -->
+                        <div class="mb-3">
+                            <label for="WorkingDays" class="form-label">عدد أيام العمل</label>
+                            <input type="number" class="form-control" id="Workingdays" name="User.Workingdays" required>
+                        </div>
+                        <!-- Working Hours -->
+                        <div class="mb-3">
+                            <label for="WorkingHours" class="form-label">عدد ساعات العمل</label>
+                            <input type="number" class="form-control" id="Workinghours" name="User.Workinghours" required>
+                        </div>
+                        <!-- Address -->
+                        <div class="mb-3">
+                            <label for="EAddress" class="form-label">العنوان</label>
+                            <input type="text" class="form-control" id="EAddress" name="User.EAddress" required>
+                        </div>
+                        <!-- Phone Number -->
+                        <div class="mb-3">
+                            <label for="PhoneNumber" class="form-label">رقم الهاتف</label>
+                            <input type="tel" class="form-control" id="PhoneNumber" name="User.PhoneNumber" required>
+                        </div>
+                        <!-- Job (Department Name) -->
+                        <div class="mb-3">
+                            <label for="Dname" class="form-label">الوظيفة</label>
+                            <select class="form-select" id="Dname" name="User.Dname" required>
+                                <option value="" disabled selected>اختر الوظيفة</option>
+                                <option value="مدير">مدير</option>
+                                <option value="محاسب">محاسب</option>
+                                <option value="مهندس">مهندس</option>
+                                <option value="موظف إداري">موظف إداري</option>
+                                <option value="عامل">عامل</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+                        <button type="submit" class="btn btn-primary">إضافة</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function deleteAll() {
+            if (confirm("هل أنت متأكد من حذف جميع الموظفين؟")) {
+                alert("تم حذف جميع الموظفين!");
+                // استدعاء API أو تنفيذ حذف جميع الموظفين
+            }
+        }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,482 @@
+﻿@page
+@using System.Data
+@using WebApplication6.Pages.Shared
+@model finModel
+@{
+    ViewData["Title"] = "المعلومات المالية";
+}
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المعلومات المالية</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #e3f2fd; /* Light blue background */
+            direction: rtl;
+        }
+
+        .intro {
+            padding-top: 30px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .table-container {
+            max-width: 100%;
+            margin: auto;
+        }
+
+        .table thead th {
+            background-color: #0d47a1; /* Dark blue header */
+            color: #ffffff;
+            border-bottom: 2px solid #0a3d91;
+        }
+
+        .table tbody tr {
+            transition: background-color 0.2s;
+        }
+
+            .table tbody tr:nth-child(even) {
+                background-color: #e1f5fe; /* Very light blue for even rows */
+            }
+
+            .table tbody tr:hover {
+                background-color: #bbdefb; /* Light blue on hover */
+            }
+
+        .financial-table th,
+        .financial-table td {
+            text-align: center;
+        }
+
+        .action-buttons button {
+            margin: 0 5px;
+        }
+
+        .add-button {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn-edit, .btn-delete {
+            background-color: #0277bd; /* Blue for Edit/Delete buttons */
+            border-color: #0277bd;
+            color: #fff;
+        }
+
+            .btn-edit:hover, .btn-delete:hover {
+                background-color: #01579b;
+                border-color: #01579b;
+            }
+
+        .btn-add {
+            background-color: #0277bd; /* Blue for Add button */
+            border-color: #0277bd;
+            color: #fff;
+        }
+
+            .btn-add:hover {
+                background-color: #01579b;
+                border-color: #01579b;
+            }
+
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            right: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+            .sidenav a {
+                padding: 8px 8px 8px 32px;
+                text-decoration: none;
+                font-size: 25px;
+                color: #818181;
+                display: block;
+                transition: 0.3s;
+            }
+
+                .sidenav a:hover {
+                    color: #f1f1f1;
+                }
+
+            .sidenav .closebtn {
+                position: absolute;
+                top: 0;
+                right: 25px;
+                font-size: 36px;
+                margin-right: 50px;
+            }
+
+        .toggle_icon {
+            cursor: pointer;
+        }
+
+            .toggle_icon img {
+                width: 30px;
+            }
+    </style>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Bundle JS (includes Popper.js for dropdowns) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Bundle JS (includes Popper.js for dropdowns) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+    
+    <div class="header_section">
+        <div class="container">
+            <div class="containt_main">
+                @if (HttpContext.Session.GetInt32("ID") == 0 || HttpContext.Session.GetInt32("ID") == null)
+                {
+                    <div id="mySidenav" class="sidenav">
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                        <a href="/index">الصفحة الرئيسية</a>
+                    </div>
+                    <span class="toggle_icon" onclick="openNav()"><img src="images/toggle-icon.png"></span>
+                }
+                else
+                {
+                    if (HttpContext.Session.GetInt32("DID") == 50101)
+                    {
+                        <div id="mySidenav" class="sidenav">
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            <a href="/index">الصفحة الرئيسية</a>
+                            <a asp-page="/Personalinfo2">المعلومات الشخصية</a>
+                            <a href="/Stat">الاحصائيات</a>
+                            <a href="/transactions">العمليات</a>
+                            <a href="/C_info">معلومات الشركة</a>
+                            <a href="/employee">الموظفين</a>
+                            <a href="/product">الادوية</a>
+                            <a href="/requestdayoff">ايام الاجازة</a>
+                            <a href="/fin">المعلومات المالية</a>
+                        </div>
+                    }
+                    else if (HttpContext.Session.GetInt32("DID") == 5111)
+                    {
+                        <div id="mySidenav" class="sidenav">
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            <a href="/index">الصفحة الرئيسية</a>
+                            <a asp-page="/Personalinfo2">المعلومات الشخصية</a>
+                            <a href="/transactions">العمليات</a>
+                        </div>
+                    }
+                    else if (HttpContext.Session.GetInt32("DID") == 50106)
+                    {
+                        <div id="mySidenav" class="sidenav">
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            <a href="/index">الصفحة الرئيسية</a>
+                            <a asp-page="/Personalinfo2">المعلومات الشخصية</a>
+                            <a href="/fin">المعلومات المالية</a>
+                        </div>
+                    }
+                    else if (HttpContext.Session.GetInt32("DID") == 50102)
+                    {
+                        <div id="mySidenav" class="sidenav">
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            <a href="/index">الصفحة الرئيسية</a>
+                            <a asp-page="/Personalinfo2">المعلومات الشخصية</a>
+                            <a href="/transactions">العمليات</a>
+                        </div>
+                    }
+                    else if (HttpContext.Session.GetInt32("DID") == 50108)
+                    {
+                        <div id="mySidenav" class="sidenav">
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            <a href="/index">الصفحة الرئيسية</a>
+                            <a asp-page="/Personalinfo2">المعلومات الشخصية</a>
+                            <a href="/product">الادوية</a>
+                        </div>
+                    }
+                    <span class="toggle_icon" onclick="openNav()"><img src="images/toggle-icon.png"></span>
+                }
+            </div>
+        </div>
+    </div>
+
+    <section class="intro">
+        <div class="bg-image h-100">
+            <div class="mask d-flex align-items-center h-100">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12 table-container">
+                            <div class="card shadow-2-strong">
+                                <div class="card-body">
+                                    <!-- جدول المعلومات المالية -->
+                                    <h4 class="text-center mb-4">جدول المعلومات المالية</h4>
+                                    <div class="row mb-3 align-items-center">
+                                        <div class="col-md-auto">
+                                            <div class="dropdown">
+                                                <button class="btn btn-primary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    ترتيب
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="sortDropdown">
+                                                    <li><a class="dropdown-item" href="?sortOrder=0">ترتيب حسب السعر تنازليًا</a></li>
+                                                    <li><a class="dropdown-item" href="?sortOrder=1">ترتيب حسب السعر تصاعديًا</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-auto">
+                                            <div class="dropdown">
+                                                <button class="btn btn-primary dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    تصفية
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="filterDropdown">
+                                                    <li><a class="dropdown-item" href="?filterType=0">إظهار عمليات الدين</a></li>
+                                                    <li><a class="dropdown-item" href="?filterType=1">إظهار عمليات الائتمان</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-md">
+                                            <div class="search-bar">
+                                                <form asp-controller="YourController" asp-action="Search" method="post">
+                                                    <div class="input-group">
+                                                        <input asp-for="Search"
+                                                               class="form-control"
+                                                               placeholder="ابحث..."
+                                                               type="text"
+                                                               name="Search" />
+                                                        <button type="submit" asp-page-handler="search" class="btn btn-primary">
+                                                            ابحث
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-borderless mb-0 financial-table">
+                                            <thead class="text-center">
+                                                <tr>
+                                                    <th scope="col">رقم الدين</th>
+                                                    <th scope="col">اسم العميل</th>
+                                                    <th scope="col">رقم العميل</th>
+                                                    <th scope="col">المبلغ</th>
+                                                    <th scope="col">دين أم ائتمان</th>
+                                                    <th scope="col">الإجراءات</th>
+                                                    
+                                            </thead>
+                                            <tbody class="text-center">
+                                                
+                                                @foreach (DataRow row in Model.Dt2.Rows)
+                                                {
+                                                    
+                                                    <tr>
+                                                        <td>@row["id"]</td>
+                                                        <td>@row["cname"]</td>
+                                                        <td>@row["cid"]</td>
+                                                        <td>@row["Amount"]</td>
+                                                        <td>@row["STATUSf"]</td>
+                                                        <td>
+                                                            <!-- Button to open the Edit popup -->
+                                                            <button class="btn btn-warning btn-sm me-1" id="editProductButton" data-id="@row["id"]" data-amount="@row["Amount"]">تعديل</button>
+
+                                                            <!-- Popup form for editing the amount -->
+                                                            <div id="editProductForm" class="edit-form d-none">
+                                                                <div class="popup-content">
+                                                                    <h5>تعديل المبلغ</h5>
+
+                                                                    <form id="editForm" method="POST" action="/YourEditPageHandler">
+                                                                        <input type="hidden" id="editProductId" name="id" />
+
+                                                                        <div class="form-group">
+                                                                            <label for="editAmount">المبلغ:</label>
+                                                                            <input type="number" id="editAmount" name="amount" class="form-control" required />
+                                                                        </div>
+                                                                        <form method="post">
+                                                                           
+                                                                            <button type="submit" formaction="?handler=Edit" class="btn btn-edit btn-sm">تعديل</button>
+                                                                        </form>
+@*                                                                         <button type="button" class="btn btn-secondary" id="closeForm">إغلاق</button>
+ *@                                                                    </form>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Add some CSS to style the popup -->
+                                                            <style>
+                                                                .edit-form {
+                                                                    position: fixed;
+                                                                    top: 0;
+                                                                    left: 0;
+                                                                    width: 100%;
+                                                                    height: 100%;
+                                                                    background-color: rgba(0, 0, 0, 0.5);
+                                                                    display: flex;
+                                                                    justify-content: center;
+                                                                    align-items: center;
+                                                                    z-index: 1000;
+                                                                }
+
+                                                                .popup-content {
+                                                                    background: white;
+                                                                    padding: 20px;
+                                                                    border-radius: 5px;
+                                                                    width: 300px;
+                                                                }
+
+                                                                .d-none {
+                                                                    display: none;
+                                                                }
+
+                                                                .show {
+                                                                    display: block;
+                                                                }
+                                                            </style>
+
+
+                                                        </td>
+                                                        <td>
+                                                            <form method="post">
+                                                                <input type="hidden" name="id" value="@row["id"]" />
+                                                                <button type="submit" formaction="?handler=Delete" class="btn btn-delete btn-sm">حذف</button>
+                                                            </form>
+                                                        </td>
+
+                                                        
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- زر إضافة جديد -->
+                                    <div class="add-button">
+                                        <button class="btn btn-add btn-sm text-white">إضافة جديد</button>
+                                    </div>
+                                    <<div class="col-md-6 mb-4">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5 class="card-title">نسبة الدين الي الائتمان</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="chart-container" width="200" height="200">
+                                                    <canvas id="PieChart"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- جدول الأرباح الشهرية -->
+                           @*  <div class="card shadow-2-strong mt-5">
+                                <div class="card-body">
+                                    <h4 class="text-center mb-4">جدول الأرباح الشهرية</h4>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-borderless mb-0 financial-table">
+                                            <thead class="text-center">
+                                                <tr>
+                                                    <th scope="col">الشهر</th>
+                                                    <th scope="col">السنه</th>
+                                                    <th scope="col">الأرباح</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="text-center align-middle">
+                                                @foreach (DataRow row in Model.Dt.Rows)
+                                                {
+                                                    <tr>
+                                                        <td>@row["monthprofit"]</td>
+                                                        <td>@row["yearprofit"]</td>
+                                                        <td>@row["net_profit"]</td>
+                                                       
+                                                     
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div> *@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    <script>
+        
+            document.addEventListener('DOMContentLoaded', (event) => {
+                var ctx2 = document.getElementById('PieChart');
+                var myChart2 = new Chart(ctx2, @Html.Raw(Model.ChartJson) );
+            });
+
+        
+
+        document.getElementById("submitButton").addEventListener("click", function () {
+            const selectedDate = document.getElementById("dateInput").value;
+
+            if (selectedDate) {
+                fetch('/YourPageName?handler=Datee', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ SelectedDate: selectedDate }),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Success:', data);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            } else {
+                alert("Please select a date!");
+            }
+        });
+        // Get the edit button and the form elements
+        const editProductButton = document.getElementById('editProductButton');
+        const editProductForm = document.getElementById('editProductForm');
+        const closeFormButton = document.getElementById('closeForm');
+        const editProductId = document.getElementById('editProductId');
+        const editAmount = document.getElementById('editAmount');
+
+        // When the 'تعديل' button is clicked
+        editProductButton.addEventListener('click', (event) => {
+            // Get the values from the button's data attributes
+            const id = event.target.getAttribute('data-id');
+            const amount = event.target.getAttribute('data-amount');
+
+            // Populate the form fields
+            editProductId.value = id;
+            editAmount.value = amount;
+
+            // Show the form
+            editProductForm.classList.remove('d-none');
+            editProductForm.classList.add('show');
+        });
+
+        // When the 'إغلاق' button is clicked
+        closeFormButton.addEventListener('click', () => {
+            // Hide the form
+            editProductForm.classList.remove('show');
+            editProductForm.classList.add('d-none');
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

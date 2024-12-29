@@ -1,0 +1,99 @@
+﻿@page
+@model WebApplication3.Pages.FormrequestModel
+@{
+}
+<head>
+    <style>
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            right: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+            .sidenav a {
+                padding: 8px 8px 8px 32px;
+                text-decoration: none;
+                font-size: 25px;
+                color: #818181;
+                display: block;
+                transition: 0.3s;
+            }
+
+                .sidenav a:hover {
+                    color: #f1f1f1;
+                }
+
+            .sidenav .closebtn {
+                position: absolute;
+                top: 0;
+                right: 25px;
+                font-size: 36px;
+                margin-right: 50px;
+            }
+
+        .toggle_icon {
+            cursor: pointer;
+        }
+
+            .toggle_icon img {
+                width: 30px;
+            }
+    </style>
+</head>
+
+<section class="h-100 gradient-form" style="background-color: #e6f7ff;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-xl-8">
+                <div class="card rounded-3 text-black">
+                    <div class="card-body p-md-5 mx-md-4">
+
+                        <div class="text-center">
+                            <img src="~/images/logo.png" style="width: 145px;" alt="الشعار">
+                            <h4 class="mt-1 mb-5 pb-1">طلب إجازة</h4>
+                        </div>
+
+                        <form method="post" asp-page-handler="SubmitLeaveRequest">
+                            <p>يرجى تعبئة النموذج التالي لطلب إجازة:</p>
+
+
+                            <!-- Leave Reason -->
+                            <div class="form-outline mb-4">
+                                <textarea id="leaveReason" class="form-control" asp-for="LeaveReason" rows="3" required></textarea>
+                                <label class="form-label" for="leaveReason">سبب الإجازة</label>
+                                <span asp-validation-for="LeaveReason" class="text-danger"></span>
+                            </div>
+
+                            <!-- Start Date -->
+                            <div class="form-outline mb-4">
+                                <input type="date" id="startDate" class="form-control" asp-for="StartDate" required />
+                                <label class="form-label" for="startDate">تاريخ بداية الإجازة</label>
+                                <span asp-validation-for="StartDate" class="text-danger"></span>
+                            </div>
+
+                            <!-- End Date -->
+                            <div class="form-outline mb-4">
+                                <input type="date" id="endDate" class="form-control" asp-for="EndDate" required />
+                                <label class="form-label" for="endDate">تاريخ نهاية الإجازة</label>
+                                <span asp-validation-for="EndDate" class="text-danger"></span>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="text-center pt-1 mb-5 pb-1">
+                                <button type="submit" class="btn btn-primary btn-block">إرسال الطلب</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

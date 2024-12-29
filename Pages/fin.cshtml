@@ -1,0 +1,157 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "المعلومات المالية";
+}
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المعلومات المالية</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #e3f2fd; /* Light blue background */
+            direction: rtl;
+        }
+
+        .intro {
+            padding-top: 30px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .table-container {
+            max-width: 100%;
+            margin: auto;
+        }
+
+        .table thead th {
+            background-color: #0d47a1; /* Dark blue header */
+            color: #ffffff;
+            border-bottom: 2px solid #0a3d91;
+        }
+
+        .table tbody tr {
+            transition: background-color 0.2s;
+        }
+
+            .table tbody tr:nth-child(even) {
+                background-color: #e1f5fe; /* Very light blue for even rows */
+            }
+
+            .table tbody tr:hover {
+                background-color: #bbdefb; /* Light blue on hover */
+            }
+
+        .financial-table th,
+        .financial-table td {
+            text-align: center;
+        }
+
+        .action-buttons button {
+            margin: 0 5px;
+        }
+
+        .add-button {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn-edit, .btn-delete {
+            background-color: #0277bd; /* Blue for Edit/Delete buttons */
+            border-color: #0277bd;
+            color: #fff;
+        }
+
+            .btn-edit:hover, .btn-delete:hover {
+                background-color: #01579b;
+                border-color: #01579b;
+            }
+
+        .btn-add {
+            background-color: #0277bd; /* Blue for Add button */
+            border-color: #0277bd;
+            color: #fff;
+        }
+
+            .btn-add:hover {
+                background-color: #01579b;
+                border-color: #01579b;
+            }
+    </style>
+</head>
+<body>
+    @await Html.PartialAsync("searchbar")
+
+    <section class="intro">
+        <div class="bg-image h-100">
+            <div class="mask d-flex align-items-center h-100">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12 table-container">
+                            <div class="card shadow-2-strong">
+                                <div class="card-body">
+                                    <!-- جدول المعلومات المالية -->
+                                    <h4 class="text-center mb-4">جدول المعلومات المالية</h4>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-borderless mb-0 financial-table">
+                                            <thead class="text-center">
+                                                <tr>
+                                                    <th scope="col">رقم الدين</th>
+                                                    <th scope="col">اسم العميل</th>
+                                                    <th scope="col">رقم العميل</th>
+                                                    <th scope="col">المبلغ</th>
+                                                    <th scope="col">دين أم ائتمان</th>
+                                                    <th scope="col">الإجراءات</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="text-center">
+                                                <tr>
+                                                    <td>D-001</td>
+                                                    <td>أحمد علي</td>
+                                                    <td>001</td>
+                                                    <td>5000</td>
+                                                    <td>دين</td>
+                                                    <td class="action-buttons">
+                                                        <button class="btn btn-edit btn-sm text-white">تعديل</button>
+                                                        <button class="btn btn-delete btn-sm text-white">حذف</button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>D-002</td>
+                                                    <td>محمد سعيد</td>
+                                                    <td>002</td>
+                                                    <td>15000</td>
+                                                    <td>ائتمان</td>
+                                                    <td class="action-buttons">
+                                                        <button class="btn btn-edit btn-sm text-white">تعديل</button>
+                                                        <button class="btn btn-delete btn-sm text-white">حذف</button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- زر إضافة جديد -->
+                                    <div class="add-button">
+                                        <button class="btn btn-add btn-sm text-white">إضافة جديد</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

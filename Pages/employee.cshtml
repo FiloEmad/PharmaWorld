@@ -1,0 +1,159 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "الصفحة الرئيسية";
+}
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جدول الموظفين</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #e3f2fd; /* Light blue background */
+            direction: rtl;
+        }
+
+        .intro {
+            padding-top: 30px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .table-container {
+            max-width: 100%;
+            margin: auto;
+        }
+
+        .table thead th {
+            background-color: #0d47a1; /* Dark blue for header */
+            color: #ffffff;
+            border-bottom: 2px solid #0a3d91;
+        }
+
+        .table tbody tr {
+            transition: background-color 0.2s;
+        }
+
+            .table tbody tr:nth-child(even) {
+                background-color: #e1f5fe; /* Very light blue for even rows */
+            }
+
+            .table tbody tr:hover {
+                background-color: #bbdefb; /* Light blue on hover */
+            }
+
+        .actions-col {
+            white-space: nowrap;
+            width: 1%;
+        }
+
+        .btn {
+            font-size: 0.85rem;
+            padding: 0.3rem 0.6rem;
+            display: inline-block;
+        }
+
+            .btn + .btn {
+                margin-left: 0.3rem;
+            }
+
+        .date-col {
+            width: 10%;
+        }
+
+        .btn-success {
+            background-color: #0277bd; /* Blue for Accept button */
+            border-color: #0277bd;
+        }
+
+        .btn-danger {
+            background-color: #b71c1c; /* Red for Reject button */
+            border-color: #b71c1c;
+        }
+
+        .btn-add {
+            background-color: #0277bd; /* Blue for Add button */
+            border-color: #0277bd;
+            color: #fff;
+        }
+
+            .btn-add:hover {
+                background-color: #01579b;
+                border-color: #01579b;
+            }
+    </style>
+</head>
+<body>
+    @await Html.PartialAsync("searchbar")
+
+    <section class="intro">
+        <div class="bg-image h-100">
+            <div class="mask d-flex align-items-center h-100">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12 table-container">
+                            <div class="card shadow-2-strong">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-borderless mb-0">
+                                            <thead class="text-center">
+                                                <tr>
+                                                    <th scope="col">اسم الموظف</th>
+                                                    <th scope="col">رقم الموظف</th>
+                                                    <th scope="col">العمر</th>
+                                                    <th scope="col">ساعات العمل</th>
+                                                    <th scope="col">أيام العمل</th>
+                                                    <th scope="col">العنوان</th>
+                                                    <th scope="col">رقم هاتف الموظف</th>
+                                                    <th scope="col">الحوافز/الخصومات</th>
+                                                    <th scope="col">الإجازات المتبقية</th>
+                                                    <th scope="col">القسم</th>
+                                                    <th scope="col">رقم القسم</th>
+                                                    <th scope="col">المرتب</th>
+                                                    <th scope="col">الإجراءات</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="text-center">
+                                                <tr>
+                                                    <td>أحمد علي</td>
+                                                    <td>2211223</td>
+                                                    <td>15</td>
+                                                    <td>4</td>
+                                                    <td>7</td>
+                                                    <td>12 شارع</td>
+                                                    <td>0112211223</td>
+                                                    <td>حافز</td>
+                                                    <td>4</td>
+                                                    <td>صناعة الأدوية</td>
+                                                    <td>D-001</td>
+                                                    <td>3000</td>
+                                                    <td class="actions-col">
+                                                        <button class="btn btn-success btn-sm">تعديل</button>
+                                                        <button class="btn btn-danger btn-sm">حذف</button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="text-center">
+                                        <button class="btn btn-add">إضافة موظف جديد</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

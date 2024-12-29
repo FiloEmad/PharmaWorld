@@ -1,0 +1,136 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "الصفحة الرئيسية";
+}
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التعاملات المالية</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #e3f2fd; /* Light blue background */
+            direction: rtl;
+        }
+
+        .intro {
+            padding-top: 30px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .table-container {
+            max-width: 100%;
+            margin: auto;
+        }
+
+        .table thead th {
+            background-color: #0d47a1; /* Dark blue for header */
+            color: #ffffff;
+            border-bottom: 2px solid #0a3d91;
+        }
+
+        .table tbody tr {
+            transition: background-color 0.2s;
+        }
+
+            .table tbody tr:nth-child(even) {
+                background-color: #e1f5fe; /* Very light blue for even rows */
+            }
+
+            .table tbody tr:hover {
+                background-color: #bbdefb; /* Light blue on hover */
+            }
+
+        .financial-table th,
+        .financial-table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .add-button {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn-add {
+            background-color: #0277bd; /* Blue for Add button */
+            border-color: #0277bd;
+            color: #fff;
+        }
+
+            .btn-add:hover {
+                background-color: #01579b;
+                border-color: #01579b;
+            }
+    </style>
+</head>
+<body>
+    @await Html.PartialAsync("searchbar")
+
+    <section class="intro">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 table-container">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h4 class="text-center mb-4">جدول التعاملات المالية</h4>
+                            <div class="table-responsive">
+                                <table class="table table-hover table-borderless mb-0 financial-table">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th scope="col">وكيل المبيعات</th>
+                                            <th scope="col">رقم وكيل المبيعات</th>
+                                            <th scope="col">مبلغ المعاملة</th>
+                                            <th scope="col">دين أم ائتمان</th>
+                                            <th scope="col">التاريخ</th>
+                                            <th scope="col">رقم المعاملة</th>
+                                            <th scope="col">رقم العميل</th>
+                                            <th scope="col">اسم العميل</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center align-middle">
+                                        <tr>
+                                            <td>خالد المصري</td>
+                                            <td>SA-001</td>
+                                            <td>10000</td>
+                                            <td>دين</td>
+                                            <td>2024-11-10</td>
+                                            <td>T-001</td>
+                                            <td>001</td>
+                                            <td>أحمد عبدالله</td>
+                                        </tr>
+                                        <tr>
+                                            <td>سارة علي</td>
+                                            <td>SA-002</td>
+                                            <td>5000</td>
+                                            <td>ائتمان</td>
+                                            <td>2024-11-12</td>
+                                            <td>T-002</td>
+                                            <td>002</td>
+                                            <td>مريم محمد</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="add-button">
+                                <button class="btn btn-add btn-sm text-white">إضافة </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

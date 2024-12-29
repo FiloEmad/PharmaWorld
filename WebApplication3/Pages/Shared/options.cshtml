@@ -1,0 +1,83 @@
+﻿@page
+@model WebApplication3.Pages.Shared.optionsModel
+@{
+}
+<div class="header_section">
+    <div class="container">
+        <div class="containt_main">
+            @if (string.IsNullOrEmpty(HttpContext.Session.GetString("name")))
+            {
+                <div id="mySidenav" class="sidenav">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                    <a href="/index">الصفحة الرئيسية</a>
+                    <a asp-page="/PersonalInfo2">المعلومات الشخصية</a>
+                </div>
+                <span class="toggle_icon" onclick="openNav()"><img src="images/toggle-icon.png"></span>
+            }
+            else
+            {
+                var sessionName = HttpContext.Session.GetString("name");
+
+                // Check if sessionName contains specific prefix and display the relevant menu
+                if (sessionName.Contains("m-"))
+                {
+                    <div id="mySidenav" class="sidenav">
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                        <a href="/index">الصفحة الرئيسية</a>
+                        <a asp-page="/Personalinfo2">المعلومات الشخصية</a>
+                        <a href="/Stat">الاحصائيات</a>
+                        <a href="/transactions">العمليات</a>
+                        <a href="/C_info">معلومات الشركة</a>
+                        <a href="/employee">الموظفين</a>
+                        <a href="/product">الادوية</a>
+                        <a href="/Jobs">الوظائف</a>
+                        <a href="/requestdayoff">ايام الاجازة</a>
+                        <a href="/fin">المعلومات المالية</a>
+                    </div>
+                }
+                else if (sessionName.Contains("s-"))
+                {
+                    <div id="mySidenav" class="sidenav">
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                        <a href="/index">الصفحة الرئيسية</a>
+                        <a asp-page="/Personalinfo2">المعلومات الشخصية</a>
+                        <a href="/transactions">العمليات</a>
+                        <a href="/requestdayoff">ايام الاجازة</a>
+                    </div>
+                }
+                else if (sessionName.Contains("f-"))
+                {
+                    <div id="mySidenav" class="sidenav">
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                        <a href="/index">الصفحة الرئيسية</a>
+                        <a asp-page="/Personalinfo2">المعلومات الشخصية</a>
+                        <a href="/requestdayoff">ايام الاجازة</a>
+                        <a href="/fin">المعلومات المالية</a>
+                    </div>
+                }
+                else if (sessionName.Contains("t-"))
+                {
+                    <div id="mySidenav" class="sidenav">
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                        <a href="/index">الصفحة الرئيسية</a>
+                        <a asp-page="/Personalinfo2">المعلومات الشخصية</a>
+                        <a href="/transactions">العمليات</a>
+                        <a href="/requestdayoff">ايام الاجازة</a>
+                    </div>
+                }
+                else if (sessionName.Contains("p-"))
+                {
+                    <div id="mySidenav" class="sidenav">
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                        <a href="/index">الصفحة الرئيسية</a>
+                        <a asp-page="/Personalinfo2">المعلومات الشخصية</a>
+                        <a href="/product">الادوية</a>
+                        <a href="/requestdayoff">ايام الاجازة</a>
+
+                    </div>
+                }
+                <span class="toggle_icon" onclick="openNav()"><img src="images/toggle-icon.png"></span>
+            }
+        </div>
+    </div>
+</div>

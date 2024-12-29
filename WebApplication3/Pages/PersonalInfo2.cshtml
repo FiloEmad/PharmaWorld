@@ -1,0 +1,352 @@
+﻿@page
+@model WebApplication3.Pages.EmployeeInfoModel
+@{
+    // ViewData["Title"] = "معلومات الموظف";
+}
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #eef2f3;
+        }
+
+        .card {
+            background-color: #e6f7ff;
+            border: 1px solid #0d47a1;
+        }
+
+        .card-header {
+            background-color: #0d47a1;
+            color: #e6f7ff;
+        }
+
+        .card-footer {
+            background-color: #eef2f3;
+        }
+
+        .section-title {
+            color: #01579b;
+            font-weight: bold;
+        }
+
+        .edit-btn {
+            font-size: 0.9rem;
+        }
+
+        .line-separator {
+            border-top: 1px solid #ddd;
+            margin: 10px 0;
+        }
+
+        button {
+            background-color: #0277bd;
+            color: white;
+            border: none;
+        }
+
+            button:hover {
+                background-color: #005b9f;
+            }
+
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            right: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+            .sidenav a {
+                padding: 8px 8px 8px 32px;
+                text-decoration: none;
+                font-size: 25px;
+                color: #818181;
+                display: block;
+                transition: 0.3s;
+            }
+
+                .sidenav a:hover {
+                    color: #f1f1f1;
+                }
+
+            .sidenav .closebtn {
+                position: absolute;
+                top: 0;
+                right: 25px;
+                font-size: 36px;
+                margin-right: 50px;
+            }
+
+        .toggle_icon {
+            cursor: pointer;
+        }
+
+            .toggle_icon img {
+                width: 30px;
+            }
+    </style>
+
+</head>
+<body>
+    <div class="header_section">
+        <div class="container">
+            <div class="containt_main">
+                @if (HttpContext.Session.GetInt32("ID") == 0 || HttpContext.Session.GetInt32("ID") == null)
+                {
+                    <div id="mySidenav" class="sidenav">
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                        <a href="/index">الصفحة الرئيسية</a>
+                    </div>
+                    <span class="toggle_icon" onclick="openNav()"><img src="images/toggle-icon.png"></span>
+                }
+                else
+                {
+                    if (HttpContext.Session.GetInt32("DID") == 50101)
+                    {
+                        <div id="mySidenav" class="sidenav">
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            <a href="/index">الصفحة الرئيسية</a>
+                            <a asp-page="/Personalinfo2">المعلومات الشخصية</a>
+                            <a href="/Stat">الاحصائيات</a>
+                            <a href="/transactions">العمليات</a>
+                            <a href="/C_info">معلومات الشركة</a>
+                            <a href="/employee">الموظفين</a>
+                            <a href="/product">الادوية</a>
+                            <a href="/requestdayoff">ايام الاجازة</a>
+                            <a href="/fin">المعلومات المالية</a>
+                        </div>
+                    }
+                    else if (HttpContext.Session.GetInt32("DID") == 5111)
+                    {
+                        <div id="mySidenav" class="sidenav">
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            <a href="/index">الصفحة الرئيسية</a>
+                            <a asp-page="/Personalinfo2">المعلومات الشخصية</a>
+                            <a href="/transactions">العمليات</a>
+                        </div>
+                    }
+                    else if (HttpContext.Session.GetInt32("DID") == 50106)
+                    {
+                        <div id="mySidenav" class="sidenav">
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            <a href="/index">الصفحة الرئيسية</a>
+                            <a asp-page="/Personalinfo2">المعلومات الشخصية</a>
+                            <a href="/fin">المعلومات المالية</a>
+                        </div>
+                    }
+                    else if (HttpContext.Session.GetInt32("DID") == 50102)
+                    {
+                        <div id="mySidenav" class="sidenav">
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            <a href="/index">الصفحة الرئيسية</a>
+                            <a asp-page="/Personalinfo2">المعلومات الشخصية</a>
+                            <a href="/transactions">العمليات</a>
+                        </div>
+                    }
+                    else if (HttpContext.Session.GetInt32("DID") == 50108)
+                    {
+                        <div id="mySidenav" class="sidenav">
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            <a href="/index">الصفحة الرئيسية</a>
+                            <a asp-page="/Personalinfo2">المعلومات الشخصية</a>
+                            <a href="/product">الادوية</a>
+                        </div>
+                    }
+                    <span class="toggle_icon" onclick="openNav()"><img src="images/toggle-icon.png"></span>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="row mb-5">
+            <div class="col-12">
+                <h2 class="section-title">معلومات الموظف</h2>
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">تفاصيل الموظف ..</h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Employee ID -->
+                        <div class="d-flex justify-content-between">
+                            <p><strong>كود الموظف:</strong> @Model.USER2.ID</p>
+                        </div>
+                        <hr class="line-separator">
+
+                        <!-- First Name -->
+                        <div class="d-flex justify-content-between">
+                            <p><strong>الاسم الاول:</strong> @Model.USER2.FName</p>
+                            <button class="btn btn-warning btn-sm edit-btn" type="button" data-bs-toggle="modal" data-bs-target="#editFirstNameModal">تعديل</button>
+                        </div>
+                        <hr class="line-separator">
+
+                        <!-- Last Name -->
+                        <div class="d-flex justify-content-between">
+                            <p><strong>الاسم الثانى:</strong> @Model.USER2.LName</p>
+                            <button class="btn btn-warning btn-sm edit-btn" type="button" data-bs-toggle="modal" data-bs-target="#editLastNameModal">تعديل</button>
+                        </div>
+                        <hr class="line-separator">
+
+                        <!-- Phone Number -->
+                        <div class="d-flex justify-content-between">
+                            <p><strong>رقم الهاتف:</strong> @Model.USER2.PhoneNumber</p>
+                            <button class="btn btn-warning btn-sm edit-btn" type="button" data-bs-toggle="modal" data-bs-target="#editPhoneModal">تعديل</button>
+                        </div>
+                        <hr class="line-separator">
+
+                        <!-- Address -->
+                        <div class="d-flex justify-content-between">
+                            <p><strong>العنوان:</strong> @Model.USER2.EAddress</p>
+                            <button class="btn btn-warning btn-sm edit-btn" type="button" data-bs-toggle="modal" data-bs-target="#editAddressModal">تعديل</button>
+                        </div>
+                        <hr class="line-separator">
+
+                        <!-- Email -->
+                        <div class="d-flex justify-content-between">
+                            <p><strong>الايميل:</strong> @Model.USER2.Email</p>
+                            <button class="btn btn-warning btn-sm edit-btn" type="button" data-bs-toggle="modal" data-bs-target="#editEmailModal">تعديل</button>
+                        </div>
+                        <hr class="line-separator">
+
+                        <!-- Job Title -->
+                        <div class="d-flex justify-content-between">
+                            <p><strong>الوظيفة:</strong> @Model.USER2.Dname</p>
+                        </div>
+                        <hr class="line-separator">
+
+                        <!-- Salary -->
+                        <div class="d-flex justify-content-between">
+                            <p><strong>الراتب:</strong> @Model.USER2.salary</p>
+                        </div>
+                        <form method="post" asp-page-handler="ReqDay">
+                            <button type="submit" class="btn btn-warning btn-sm edit-btn float-start">طلب يوم اجازه</button>
+                        </form>
+                    </div>
+                    <div class="card-footer text-center">
+                        <small>تم التحديث: منذ يومين</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Editing First Name -->
+    <div class="modal fade" id="editFirstNameModal" tabindex="-1" aria-labelledby="editFirstNameModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editFirstNameModalLabel">تعديل الاسم الاول</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" asp-page-handler="SaveFirstName">
+                        <div class="mb-3">
+                            <label for="firstName" class="form-label">الاسم الاول</label>
+                            <input type="text" class="form-control" id="firstName" name="FirstName" value="@Model.USER2.FName">
+                        </div>
+                        <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Editing Last Name -->
+    <div class="modal fade" id="editLastNameModal" tabindex="-1" aria-labelledby="editLastNameModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editLastNameModalLabel">تعديل الاسم الثانى</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" asp-page-handler="SaveLastName">
+                        <div class="mb-3">
+                            <label for="lastName" class="form-label">الاسم الثانى</label>
+                            <input type="text" class="form-control" id="lastName" name="LastName" value="@Model.USER2.LName">
+                        </div>
+                        <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Editing Phone Number -->
+    <div class="modal fade" id="editPhoneModal" tabindex="-1" aria-labelledby="editPhoneModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editPhoneModalLabel">تعديل رقم الهاتف</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" asp-page-handler="SavePhone">
+                        <div class="mb-3">
+                            <label for="phoneNumber" class="form-label">رقم الهاتف</label>
+                            <input type="text" class="form-control" id="phoneNumber" name="PhoneNumber" value="@Model.USER2.PhoneNumber">
+                        </div>
+                        <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Editing Address -->
+    <div class="modal fade" id="editAddressModal" tabindex="-1" aria-labelledby="editAddressModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editAddressModalLabel">تعديل العنوان</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" asp-page-handler="SaveAddress">
+                        <div class="mb-3">
+                            <label for="address" class="form-label">العنوان</label>
+                            <input type="text" class="form-control" id="address" name="Address" value="@Model.USER2.EAddress">
+                        </div>
+                        <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Editing Email -->
+    <div class="modal fade" id="editEmailModal" tabindex="-1" aria-labelledby="editEmailModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editEmailModalLabel">تعديل الايميل</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" asp-page-handler="SaveEmail">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">الايميل</label>
+                            <input type="email" class="form-control" id="email" name="Email" value="@Model.USER2.Email">
+                        </div>
+                        <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,239 @@
+﻿@page
+@model WebApplication3.Pages.C_infoModel
+@{
+}
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معلومات الشركة - بيانات تعريفية</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS for baby blue theme -->
+    <style>
+        body {
+            background-color: #eef2f3; /* Light baby blue background */
+        }
+
+        .card {
+            background-color: #e6f7ff; /* Soft baby blue for cards */
+            border: 1px solid #0d47a1;
+        }
+
+        .card-header {
+            background-color: #0d47a1; /* Lighter baby blue header */
+            color: #e6f7ff; /* Darker blue text */
+        }
+
+        .card-footer {
+            background-color: #eef2f3; /* Very light blue footer */
+        }
+
+        .section-title {
+            color: #01579b;
+            font-weight: bold;
+        }
+
+        .contact-info {
+            font-size: 1.2rem;
+            color: #0277bd;
+        }
+
+        /* Styling for the "Edit" button */
+        .edit-btn {
+            font-size: 0.9rem;
+        }
+
+        .line-separator {
+            border-top: 1px solid #ddd;
+            margin: 10px 0;
+        }
+
+        /* Styling for the sidenav */
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            right: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+            .sidenav a {
+                padding: 8px 8px 8px 32px;
+                text-decoration: none;
+                font-size: 25px;
+                color: #818181;
+                display: block;
+                transition: 0.3s;
+            }
+
+                .sidenav a:hover {
+                    color: #f1f1f1;
+                }
+
+            .sidenav .closebtn {
+                position: absolute;
+                top: 0;
+                right: 25px;
+                font-size: 36px;
+                margin-right: 50px;
+            }
+
+        .toggle_icon {
+            cursor: pointer;
+        }
+
+            .toggle_icon img {
+                width: 30px;
+            }
+    </style>
+</head>
+<body>
+    <div class="header_section">
+        <div class="container">
+            <div class="containt_main">
+                @if (HttpContext.Session.GetInt32("ID") == 0 || HttpContext.Session.GetInt32("ID") == null)
+                {
+                    <div id="mySidenav" class="sidenav">
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                        <a href="/index">الصفحة الرئيسية</a>
+                    </div>
+                    <span class="toggle_icon" onclick="openNav()"><img src="images/toggle-icon.png"></span>
+                }
+                else
+                {
+                    if (HttpContext.Session.GetInt32("DID") == 50101)
+                    {
+                        <div id="mySidenav" class="sidenav">
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            <a href="/index">الصفحة الرئيسية</a>
+                            <a asp-page="/Personalinfo2">المعلومات الشخصية</a>
+                            <a href="/Stat">الاحصائيات</a>
+                            <a href="/transactions">العمليات</a>
+                            <a href="/C_info">معلومات الشركة</a>
+                            <a href="/employee">الموظفين</a>
+                            <a href="/product">الادوية</a>
+                            <a href="/requestdayoff">ايام الاجازة</a>
+                            <a href="/fin">المعلومات المالية</a>
+                        </div>
+                    }
+                    else if (HttpContext.Session.GetInt32("DID") == 5111)
+                    {
+                        <div id="mySidenav" class="sidenav">
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            <a href="/index">الصفحة الرئيسية</a>
+                            <a asp-page="/Personalinfo2">المعلومات الشخصية</a>
+                            <a href="/transactions">العمليات</a>
+                        </div>
+                    }
+                    else if (HttpContext.Session.GetInt32("DID") == 50106)
+                    {
+                        <div id="mySidenav" class="sidenav">
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            <a href="/index">الصفحة الرئيسية</a>
+                            <a asp-page="/Personalinfo2">المعلومات الشخصية</a>
+                            <a href="/fin">المعلومات المالية</a>
+                        </div>
+                    }
+                    else if (HttpContext.Session.GetInt32("DID") == 50102)
+                    {
+                        <div id="mySidenav" class="sidenav">
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            <a href="/index">الصفحة الرئيسية</a>
+                            <a asp-page="/Personalinfo2">المعلومات الشخصية</a>
+                            <a href="/transactions">العمليات</a>
+                        </div>
+                    }
+                    else if (HttpContext.Session.GetInt32("DID") == 50108)
+                    {
+                        <div id="mySidenav" class="sidenav">
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            <a href="/index">الصفحة الرئيسية</a>
+                            <a asp-page="/Personalinfo2">المعلومات الشخصية</a>
+                            <a href="/product">الادوية</a>
+                        </div>
+                    }
+                    <span class="toggle_icon" onclick="openNav()"><img src="images/toggle-icon.png"></span>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <!-- Company Metadata Section -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <h2 class="section-title">معلومات الشركة</h2>
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">تفاصيل شركة ..</h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Company Name -->
+                        <div class="d-flex justify-content-between">
+                            <p><strong>اسم الشركة:</strong> @Model.company.Cname</p>
+                        </div>
+                        <hr class="line-separator">
+
+                        <!-- Company Location -->
+                        <div class="d-flex justify-content-between">
+                            <p><strong>الموقع:</strong> @Model.company.Adress</p>
+                        </div>
+                        <hr class="line-separator">
+
+                        <!-- Owner Name -->
+                        <div class="d-flex justify-content-between">
+                            <p><strong>اسم المالك:</strong> @Model.company.C_owner</p>
+                        </div>
+                        <hr class="line-separator">
+
+                        <!-- Contact Email -->
+                        <div class="d-flex justify-content-between">
+                            <p><strong>البريد الإلكتروني:</strong>@Model.company.Email</p>
+                        </div>
+                        <hr class="line-separator">
+
+                        <!-- Contact Phone -->
+                        <div class="d-flex justify-content-between">
+                            <p><strong>رقم الهاتف:</strong> @Model.company.Contact</p>
+                        </div>
+                        <hr class="line-separator">
+
+                        <!-- Company Website -->
+                        <div class="d-flex justify-content-between">
+                            <p><strong>موقع الشركة الإلكتروني:</strong> <a href=".." target="_blank">..</a></p>
+                        </div>
+                        <hr class="line-separator">
+
+                        <!-- Additional Notes -->
+                        <div class="d-flex justify-content-between">
+                            <p><strong>ملاحظات إضافية:</strong> </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+    </script>
+
+    <!-- Bootstrap JS and dependencies (optional for interactivity) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+</body>
+</html>

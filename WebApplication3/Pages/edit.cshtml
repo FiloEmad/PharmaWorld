@@ -1,0 +1,338 @@
+﻿@page
+@using WebApplication3.Pages
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; /* لون خلفية الصفحة */
+        }
+
+        .container {
+            margin-top: 30px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+        }
+
+        .card-body {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn.profile-button {
+            background-color: #89CFF0;
+            color: white;
+            font-size: 16px;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+            .btn.profile-button:hover {
+                background-color: #7ec8f3;
+            }
+
+        .labels {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .profile-card {
+            background-color: #89CFF0; /* اللون المحدد */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+            .profile-card h4 {
+                font-size: 20px;
+                color: #333;
+            }
+
+        .form-control {
+            border-radius: 5px;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .text-center button {
+            width: 150px;
+        }
+
+        .section-header h3 {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <section class="p-3 p-md-4 p-xl-5">
+        <div class="container">
+            <div class="card border-light-subtle shadow-sm">
+                <div class="row g-0">
+                    <div class="col-12 col-md-6">
+                        <div class="card-body p-3 p-md-4 p-xl-5">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="mb-5">
+                                        <h3>تعديل البيانات</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container rounded bg-white mt-5 mb-5" style="background-color: #89CFF0;">
+                               
+                                @if (string.IsNullOrEmpty(HttpContext.Session.GetString("EDIT2.firstname")))
+                                {
+                                    <form method="post" asp-page-handler="editfirstname">
+                                        <div class="row">
+                                            <div class="col-md-5 border-right">
+                                                <div class="p-3 py-5">
+                                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                                        <h4 class="text-right">المعلومات الشخصية</h4>
+                                                    </div>
+                                                    <div class="row mt-2">
+                                                        <div class="col-md-6">
+                                                            <label class="labels">الاسم الاول</label>
+                                                            <input type="text" class="form-control" name="EDIT2.firstname" placeholder="first name" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="mt-5 text-center">
+                                                        <button class="btn profile-button" type="submit" style="background-color: #89CFF0; color: white;">حفظ</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                }
+                                else if (string.IsNullOrEmpty(HttpContext.Session.GetString("EDIT2.lastname")))
+                                {
+                                <form method="post" asp-page-handler="editlastname">
+                                    <div class="row">
+                                        <div class="col-md-5 border-right">
+                                            <div class="p-3 py-5">
+                                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                                    <h4 class="text-right">المعلومات الشخصية</h4>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-md-6">
+                                                        <label class="labels">اللقب</label>
+                                                        <input type="text" class="form-control" name="EDIT2.lastname" placeholder="اللقب" value="">
+                                                    </div>
+                                                </div>
+                                                <div class="mt-5 text-center">
+                                                    <button class="btn profile-button" type="submit" style="background-color: #89CFF0; color: white;">حفظ</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                }
+                                else if (HttpContext.Session.GetInt32("EDIT2.phonenumber") == 0)
+                                {
+                                <form method="post" asp-page-handler="editphonenumber">
+                                    <div class="row">
+                                        <div class="col-md-5 border-right">
+                                            <div class="p-3 py-5">
+                                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                                    <h4 class="text-right">المعلومات الشخصية</h4>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-md-12">
+                                                        <label class="labels">رقم الهاتف</label>
+                                                        <input type="tel" class="form-control" name="EDIT2.phonenumber" placeholder="ادخل رقم الهاتف" value="">
+                                                    </div>
+                                                </div>
+                                                <div class="mt-5 text-center">
+                                                    <button class="btn profile-button" type="submit" style="background-color: #89CFF0; color: white;">حفظ</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                }
+                                else if (string.IsNullOrEmpty(HttpContext.Session.GetString("EDIT2.adress")))
+                                {
+                                <form method="post" asp-page-handler="editaddress">
+                                    <div class="row">
+                                        <div class="col-md-5 border-right">
+                                            <div class="p-3 py-5">
+                                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                                    <h4 class="text-right">المعلومات الشخصية</h4>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-md-12">
+                                                        <label class="labels">العنوان</label>
+                                                        <input type="text" class="form-control" name="EDIT1.address" placeholder="ادخل العنوان" value="">
+                                                    </div>
+                                                </div>
+                                                <div class="mt-5 text-center">
+                                                    <button class="btn profile-button" type="submit" style="background-color: #89CFF0; color: white;">حفظ</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                }
+                                else if (HttpContext.Session.GetInt32("EDIT2.postode") == 0)
+                                {
+                                <form method="post" asp-page-handler="editpostcode">
+                                    <div class="row">
+                                        <div class="col-md-5 border-right">
+                                            <div class="p-3 py-5">
+                                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                                    <h4 class="text-right">المعلومات الشخصية</h4>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-md-12">
+                                                        <label class="labels">Postcode</label>
+                                                        <input type="text" class="form-control" name="EDIT2.postcode" placeholder="Enter postcode" value="">
+                                                    </div>
+                                                </div>
+                                                <div class="mt-5 text-center">
+                                                    <button class="btn profile-button" type="submit" style="background-color: #89CFF0; color: white;">حفظ</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                }
+                                else if (string.IsNullOrEmpty(HttpContext.Session.GetString("EDIT2.city")))
+                                {
+                                <form method="post" asp-page-handler="editcity">
+                                    <div class="row">
+                                        <div class="col-md-5 border-right">
+                                            <div class="p-3 py-5">
+                                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                                    <h4 class="text-right">المعلومات الشخصية</h4>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-md-12">
+                                                        <label class="labels">المدينة</label>
+                                                        <input type="text" class="form-control" name="EDIT2.city" placeholder="ادخل المدينة" value="">
+                                                    </div>
+                                                </div>
+                                                <div class="mt-5 text-center">
+                                                    <button class="btn profile-button" type="submit" style="background-color: #89CFF0; color: white;">حفظ</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                }
+                                else if (string.IsNullOrEmpty(HttpContext.Session.GetString("EDIT2.email")))
+                                {
+                                <form method="post" asp-page-handler="editemail">
+                                    <div class="row">
+                                        <div class="col-md-5 border-right">
+                                            <div class="p-3 py-5">
+                                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                                    <h4 class="text-right">المعلومات الشخصية</h4>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-md-12">
+                                                        <label class="labels">الايميل</label>
+                                                        <input type="email" class="form-control" name="EDIT2.email" placeholder="البريد الشخصي" value="">
+                                                    </div>
+                                                </div>
+                                                <div class="mt-5 text-center">
+                                                    <button class="btn profile-button" type="submit" style="background-color: #89CFF0; color: white;">حفظ</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                }
+                                else if (string.IsNullOrEmpty(HttpContext.Session.GetString("EDIT2.education")))
+                                {
+                                <form method="post" asp-page-handler="editeducation">
+                                    <div class="row">
+                                        <div class="col-md-5 border-right">
+                                            <div class="p-3 py-5">
+                                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                                    <h4 class="text-right">المعلومات الشخصية</h4>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-md-12">
+                                                        <label class="labels">مستوي التعليم</label>
+                                                        <input type="text" class="form-control" name="EDIT2.education" placeholder="مستوي التعليم" value="">
+                                                    </div>
+                                                </div>
+                                                <div class="mt-5 text-center">
+                                                    <button class="btn profile-button" type="submit" style="background-color: #89CFF0; color: white;">حفظ</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                }
+                                else if (string.IsNullOrEmpty(HttpContext.Session.GetString("EDIT2.job")))
+                                {
+                                <form method="post" asp-page-handler="editjob">
+                                    <div class="row">
+                                        <div class="col-md-5 border-right">
+                                            <div class="p-3 py-5">
+                                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                                    <h4 class="text-right">المعلومات الشخصية</h4>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-md-12">
+                                                        <label class="labels">الوظيفة</label>
+                                                        <input type="text" class="form-control" name="EDIT2.job" placeholder="الوظيفة" value="">
+                                                    </div>
+                                                </div>
+                                                <div class="mt-5 text-center">
+                                                    <button class="btn profile-button" type="submit" style="background-color: #89CFF0; color: white;">حفظ</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                }
+                                else if (string.IsNullOrEmpty(HttpContext.Session.GetString("EDIT2.country")))
+                                {
+                                <form method="post" asp-page-handler="editcountry">
+                                    <div class="row">
+                                        <div class="col-md-5 border-right">
+                                            <div class="p-3 py-5">
+                                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                                    <h4 class="text-right">المعلومات الشخصية</h4>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-md-12">
+                                                        <label class="labels">الدولة</label>
+                                                        <input type="text" class="form-control" name="EDIT2.country" placeholder="البلد" value="">
+                                                    </div>
+                                                </div>
+                                                <div class="mt-5 text-center">
+                                                    <button class="btn profile-button" type="submit" style="background-color: #89CFF0; color: white;">حفظ</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                }
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+                            </section>
+                            </body>
+                            </html>
+

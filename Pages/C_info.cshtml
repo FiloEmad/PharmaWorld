@@ -1,0 +1,274 @@
+﻿@page
+@model WebApplication3.Pages.C_infoModel
+@{
+}
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معلومات الشركة - بيانات تعريفية</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS for baby blue theme -->
+    <style>
+        body {
+            background-color: #eef2f3; /* Light baby blue background */
+        }
+
+        .card {
+            background-color: #e6f7ff; /* Soft baby blue for cards */
+            border: 1px solid #0d47a1;
+        }
+
+        .card-header {
+            background-color: #0d47a1; /* Lighter baby blue header */
+            color: #e6f7ff; /* Darker blue text */
+        }
+
+        .card-footer {
+            background-color: #eef2f3; /* Very light blue footer */
+        }
+
+        .section-title {
+            color: #01579b;
+            font-weight: bold;
+        }
+
+        .contact-info {
+            font-size: 1.2rem;
+            color: #0277bd;
+        }
+
+        /* Styling for the "Edit" button */
+        .edit-btn {
+            font-size: 0.9rem;
+        }
+
+        .line-separator {
+            border-top: 1px solid #ddd;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container mt-5">
+        <!-- Company Metadata Section -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <h2 class="section-title">معلومات الشركة</h2>
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">تفاصيل شركة ..</h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Company Name -->
+                        <div class="d-flex justify-content-between">
+                            <p><strong>اسم الشركة:</strong> ..</p>
+                            <button class="btn btn-warning btn-sm edit-btn" data-bs-toggle="modal" data-bs-target="#editCompanyNameModal">تعديل</button>
+                        </div>
+                        <hr class="line-separator">
+
+                        <!-- Company Location -->
+                        <div class="d-flex justify-content-between">
+                            <p><strong>الموقع:</strong> ..</p>
+                            <button class="btn btn-warning btn-sm edit-btn" data-bs-toggle="modal" data-bs-target="#editCompanyLocationModal">تعديل</button>
+                        </div>
+                        <hr class="line-separator">
+
+                        <!-- Owner Name -->
+                        <div class="d-flex justify-content-between">
+                            <p><strong>اسم المالك:</strong> ..</p>
+                            <button class="btn btn-warning btn-sm edit-btn" data-bs-toggle="modal" data-bs-target="#editOwnerNameModal">تعديل</button>
+                        </div>
+                        <hr class="line-separator">
+
+                        <!-- Contact Email -->
+                        <div class="d-flex justify-content-between">
+                            <p><strong>البريد الإلكتروني:</strong> ..</p>
+                            <button class="btn btn-warning btn-sm edit-btn" data-bs-toggle="modal" data-bs-target="#editEmailModal">تعديل</button>
+                        </div>
+                        <hr class="line-separator">
+
+                        <!-- Contact Phone -->
+                        <div class="d-flex justify-content-between">
+                            <p><strong>رقم الهاتف:</strong> ..</p>
+                            <button class="btn btn-warning btn-sm edit-btn" data-bs-toggle="modal" data-bs-target="#editPhoneModal">تعديل</button>
+                        </div>
+                        <hr class="line-separator">
+
+                        <!-- Company Website -->
+                        <div class="d-flex justify-content-between">
+                            <p><strong>موقع الشركة الإلكتروني:</strong> <a href=".." target="_blank">..</a></p>
+                            <button class="btn btn-warning btn-sm edit-btn" data-bs-toggle="modal" data-bs-target="#editWebsiteModal">تعديل</button>
+                        </div>
+                        <hr class="line-separator">
+
+                        <!-- Additional Notes -->
+                        <div class="d-flex justify-content-between">
+                            <p><strong>ملاحظات إضافية:</strong> ..</p>
+                            <button class="btn btn-warning btn-sm edit-btn" data-bs-toggle="modal" data-bs-target="#editNotesModal">تعديل</button>
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <small>تم التحديث: منذ يومين</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Editing Company Name -->
+    <div class="modal fade" id="editCompanyNameModal" tabindex="-1" aria-labelledby="editCompanyNameModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editCompanyNameModalLabel">تعديل اسم الشركة</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="companyName" class="form-label">اسم الشركة</label>
+                            <input type="text" class="form-control" id="companyName" value="..">
+                        </div>
+                        <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Editing Company Location -->
+    <div class="modal fade" id="editCompanyLocationModal" tabindex="-1" aria-labelledby="editCompanyLocationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editCompanyLocationModalLabel">تعديل الموقع</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="companyLocation" class="form-label">الموقع</label>
+                            <input type="text" class="form-control" id="companyLocation" value="..">
+                        </div>
+                        <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Editing Owner Name -->
+    <div class="modal fade" id="editOwnerNameModal" tabindex="-1" aria-labelledby="editOwnerNameModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editOwnerNameModalLabel">تعديل اسم المالك</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="ownerName" class="form-label">اسم المالك</label>
+                            <input type="text" class="form-control" id="ownerName" value="..">
+                        </div>
+                        <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Editing Email -->
+    <div class="modal fade" id="editEmailModal" tabindex="-1" aria-labelledby="editEmailModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editEmailModalLabel">تعديل البريد الإلكتروني</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">البريد الإلكتروني</label>
+                            <input type="email" class="form-control" id="email" value="..">
+                        </div>
+                        <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Editing Phone -->
+    <div class="modal fade" id="editPhoneModal" tabindex="-1" aria-labelledby="editPhoneModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editPhoneModalLabel">تعديل رقم الهاتف</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">رقم الهاتف</label>
+                            <input type="text" class="form-control" id="phone" value="..">
+                        </div>
+                        <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Editing Website -->
+    <div class="modal fade" id="editWebsiteModal" tabindex="-1" aria-labelledby="editWebsiteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editWebsiteModalLabel">تعديل موقع الشركة الإلكتروني</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="website" class="form-label">موقع الشركة الإلكتروني</label>
+                            <input type="url" class="form-control" id="website" value="..">
+                        </div>
+                        <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Editing Additional Notes -->
+    <div class="modal fade" id="editNotesModal" tabindex="-1" aria-labelledby="editNotesModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editNotesModalLabel">تعديل الملاحظات الإضافية</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="notes" class="form-label">الملاحظات</label>
+                            <textarea class="form-control" id="notes" rows="3">..</textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies (optional for interactivity) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+</body>
+</html>

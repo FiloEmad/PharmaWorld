@@ -1,0 +1,103 @@
+﻿@page
+@model WebApplication3.Pages.Index1Model
+@{
+    ViewData["Title"] = "الصفحة الرئيسية";
+}
+<head>
+    <style>
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            right: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+            .sidenav a {
+                padding: 8px 8px 8px 32px;
+                text-decoration: none;
+                font-size: 25px;
+                color: #818181;
+                display: block;
+                transition: 0.3s;
+            }
+
+                .sidenav a:hover {
+                    color: #f1f1f1;
+                }
+
+            .sidenav .closebtn {
+                position: absolute;
+                top: 0;
+                right: 25px;
+                font-size: 36px;
+                margin-right: 50px;
+            }
+
+        .toggle_icon {
+            cursor: pointer;
+        }
+
+            .toggle_icon img {
+                width: 30px;
+            }
+    </style>
+</head>
+
+<section class="h-100 gradient-form" style="background-color: #e6f7ff;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-xl-10">
+                <div class="card rounded-3 text-black">
+                    <div class="row g-0">
+                        <div class="col-lg-6">
+                            <div class="card-body p-md-5 mx-md-4">
+
+                                <div class="text-center">
+                                    <img src="~/images/logo.png" style="width: 145px;" alt="الشعار">
+
+                                    <h4 class="mt-1 mb-5 pb-1"> فريق فارما وورلد</h4>
+                                </div>
+
+                                <form method="post">
+                                    <p>من فضلك قم بتسجيل الدخول إلى حسابك</p>
+
+                                    <div data-mdb-input-init class="form-outline mb-4">
+                                        <input type="number" id="form2Example11" class="form-control"
+                                               placeholder="الكود الخاص بك" asp-for="@Model.USER2.ID" />
+                                        <label class="form-label" for="form2Example11">كود المستخدم</label>
+                                    </div>
+
+                                    <div data-mdb-input-init class="form-outline mb-4">
+                                        <input type="password" id="form2Example22" class="form-control" asp-for="@Model.USER2.password" />
+                                        <label class="form-label" for="form2Example22">كلمة المرور</label>
+                                    </div>
+
+                                    <div class="text-center pt-1 mb-5 pb-1">
+                                        <input type="submit" asp-page-handler="login" class="btn btn-primary mt-3" value="سجل الدخول" />
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6 d-flex align-items-center" style="background-color: #b3d9ff;">
+                            <div class="text-dark px-3 py-4 p-md-5 mx-md-4">
+                                <h4 class="mb-4">نحن أكثر من مجرد شركة</h4>
+                                <p class="small mb-0">
+
+                                    نحن في شركة فارما وورلد للأدوية البيطرية نعمل على توفير أفضل العلاجات والمنتجات البيطرية التي تساهم في تعزيز صحة وسلامة الحيوانات. نحن نركز على تقديم حلول مبتكرة وفعّالة للأطباء البيطريين، ونفخر بتوفير بيئة عمل داعمة لموظفينا. عبر موقعنا الإلكتروني، يمكن للموظفين الوصول إلى كل ما يحتاجونه من معلومات حول الأدوية، الطلبات، والمستندات المتعلقة بالأعمال البيطرية. نحن نلتزم بأعلى معايير الجودة لضمان تقديم خدمة متميزة للحيوانات ومالكيها.
+
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

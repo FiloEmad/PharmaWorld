@@ -1,0 +1,343 @@
+﻿@page
+@using System.Data
+@model WebApplication6.Pages.TransactionsModel
+@{
+    ViewData["Title"] = "التعاملات المالية";
+}
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التعاملات المالية</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      
+        body {
+            background-color: #e3f2fd;
+            direction: rtl;
+        }
+
+        .table-container {
+            margin: auto;
+        }
+
+        .table thead th {
+            background-color: #0d47a1;
+            color: #ffffff;
+        }
+
+        .btn-primary, .dropdown-toggle {
+            background-color: #0d47a1;
+        }
+
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            right: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+            .sidenav a {
+                padding: 8px 8px 8px 32px;
+                text-decoration: none;
+                font-size: 25px;
+                color: #818181;
+                display: block;
+                transition: 0.3s;
+            }
+
+                .sidenav a:hover {
+                    color: #f1f1f1;
+                }
+
+            .sidenav .closebtn {
+                position: absolute;
+                top: 0;
+                right: 25px;
+                font-size: 36px;
+                margin-right: 50px;
+            }
+
+        .toggle_icon {
+            cursor: pointer;
+        }
+
+            .toggle_icon img {
+                width: 30px;
+            }
+    </style>
+</head>
+<body>
+    <div class="header_section">
+        <div class="container">
+            <div class="containt_main">
+                @if (HttpContext.Session.GetInt32("ID") == 0 || HttpContext.Session.GetInt32("ID") == null)
+                {
+                    <div id="mySidenav" class="sidenav">
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                        <a href="/index">الصفحة الرئيسية</a>
+                    </div>
+                    <span class="toggle_icon" onclick="openNav()"><img src="images/toggle-icon.png"></span>
+                }
+                else
+                {
+                    if (HttpContext.Session.GetInt32("DID") == 50101)
+                    {
+                        <div id="mySidenav" class="sidenav">
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            <a href="/index">الصفحة الرئيسية</a>
+                            <a asp-page="/Personalinfo2">المعلومات الشخصية</a>
+                            <a href="/Stat">الاحصائيات</a>
+                            <a href="/transactions">العمليات</a>
+                            <a href="/C_info">معلومات الشركة</a>
+                            <a href="/employee">الموظفين</a>
+                            <a href="/product">الادوية</a>
+                            <a href="/requestdayoff">ايام الاجازة</a>
+                            <a href="/fin">المعلومات المالية</a>
+                        </div>
+                    }
+                    else if (HttpContext.Session.GetInt32("DID") == 5111)
+                    {
+                        <div id="mySidenav" class="sidenav">
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            <a href="/index">الصفحة الرئيسية</a>
+                            <a asp-page="/Personalinfo2">المعلومات الشخصية</a>
+                            <a href="/transactions">العمليات</a>
+                        </div>
+                    }
+                    else if (HttpContext.Session.GetInt32("DID") == 50106)
+                    {
+                        <div id="mySidenav" class="sidenav">
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            <a href="/index">الصفحة الرئيسية</a>
+                            <a asp-page="/Personalinfo2">المعلومات الشخصية</a>
+                            <a href="/fin">المعلومات المالية</a>
+                        </div>
+                    }
+                    else if (HttpContext.Session.GetInt32("DID") == 50102)
+                    {
+                        <div id="mySidenav" class="sidenav">
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            <a href="/index">الصفحة الرئيسية</a>
+                            <a asp-page="/Personalinfo2">المعلومات الشخصية</a>
+                            <a href="/transactions">العمليات</a>
+                        </div>
+                    }
+                    else if (HttpContext.Session.GetInt32("DID") == 50108)
+                    {
+                        <div id="mySidenav" class="sidenav">
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            <a href="/index">الصفحة الرئيسية</a>
+                            <a asp-page="/Personalinfo2">المعلومات الشخصية</a>
+                            <a href="/product">الادوية</a>
+                        </div>
+                    }
+                    <span class="toggle_icon" onclick="openNav()"><img src="images/toggle-icon.png"></span>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <h4 class="text-center mb-4">جدول التعاملات المالية</h4>
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        ترتيب
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="sortDropdown">
+                        <li><a class="dropdown-item" href="?sortOrder=0">ترتيب حسب السعر تنازليًا</a></li>
+                        <li><a class="dropdown-item" href="?sortOrder=1">ترتيب حسب السعر تصاعديًا</a></li>
+                        <li><a class="dropdown-item" href="?sortOrder=2">ترتيب حسب الأبجدية</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        تصفية
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="filterDropdown">
+                        <li><a class="dropdown-item" href="?filterType=0">إظهار عمليات البيع</a></li>
+                        <li><a class="dropdown-item" href="?filterType=1">إظهار عمليات الشراء</a></li>
+                    </ul>
+                </div> 
+            </div>
+        </div>
+        <div class="table-responsive table-container">
+            <table class="table table-hover table-borderless mb-0">
+                <thead>
+                    <tr>
+                        <th>رقم العملية</th>
+                        <th>التاريخ</th>
+                        <th>وكيل المبيعات</th>
+                        <th>بيع او شراء</th>
+                        <th>اسم المنتج</th>
+                        <th>اسم العميل</th>
+                        <th>السعر</th>
+                        <th>المدفوع</th>
+                        <th>المتبقي</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Dt.Rows.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="9">لا توجد بيانات لعرضها</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (DataRow row in Model.Dt.Rows)
+                        {
+                            <tr>
+                                <td>@row["tid"]</td>
+                                <td>@row["tdate"]</td>
+                                <td>@($"{row["FName"]} {row["LName"]}")</td>
+                                <td>@row["sell_buy"]</td>
+                                <td>@row["pname"]</td>
+                                <td>@row["cname"]</td>
+                                <td>@row["price"]</td>
+                                <td>@row["Paid_amount"]</td>
+                                <td>@row["remainder"]</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="add-button">
+        <button class="btn btn-warning btn-sm me-1" id="addTransactionButton">اضافة جديد</button>
+    </div>
+    <div id="addTransactionForm" class="d-none">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">إضافة عملية جديدة</h5>
+                    <button type="button" class="btn-close" id="closeForm" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="transactionForm" method="post" asp-page-handler="Add">
+                        <div class="mb-3">
+                            <label for="transactionDate" class="form-label">التاريخ</label>
+                            <input type="date" class="form-control" id="transactionDate" name="transactionDate" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="salesAgent" class="form-label">وكيل المبيعات</label>
+                            <input type="text" class="form-control" id="salesAgent" name="salesAgent" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="salesAgentnumber" class="form-label">رقم وكيل المبيعات</label>
+                            <input type="text" class="form-control" id="salesAgentnumber" name="salesAgentnumber" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="transactionType" class="form-label">بيع او شراء</label>
+                            <select class="form-select" id="transactionType" name="transactionType" required>
+                                <option value="بيع">بيع</option>
+                                <option value="شراء">شراء</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="productName" class="form-label">اسم المنتج</label>
+                            <input type="text" class="form-control" id="productName" name="productName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="productNumber" class="form-label">رقم المنتج</label>
+                            <input type="text" class="form-control" id="productNumber" name="productNumber" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Amount" class="form-label">الكمية</label>
+                            <input type="text" class="form-control" id="Amount" name="Amount" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="customerNumber" class="form-label">رقم العميل</label>
+                            <input type="text" class="form-control" id="customerNumber" name="customerNumber" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="customerName" class="form-label">اسم العميل</label>
+                            <input type="text" class="form-control" id="customerName" name="customerName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="payment" class="form-label">طريقة الدفع</label>
+                            <input type="text" class="form-control" id="payment" name="payment" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price" class="form-label">السعر</label>
+                            <input type="number" class="form-control" id="price" name="price" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="paidAmount" class="form-label">المدفوع</label>
+                            <input type="number" class="form-control" id="paidAmount" name="paidAmount" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="remainingAmount" class="form-label">المتبقي</label>
+                            <input type="number" class="form-control" id="remainingAmount" name="remainingAmount" required>
+                        </div>
+                        <button type="submit" class="btn btn-edit btn-sm">إضافة العملية</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const addTransactionButton = document.getElementById('addTransactionButton');
+        const addTransactionForm = document.getElementById('addTransactionForm');
+        const closeFormButton = document.getElementById('closeForm');
+
+        // Show the form when the button is clicked
+        addTransactionButton.addEventListener('click', () => {
+            addTransactionForm.classList.remove('d-none'); // Remove 'd-none' to show
+            addTransactionForm.classList.add('show');      // Add 'show' to display
+        });
+
+        // Close the form when the close button is clicked
+        closeFormButton.addEventListener('click', () => {
+            addTransactionForm.classList.remove('show');  // Remove 'show' to hide
+            addTransactionForm.classList.add('d-none');   // Add 'd-none' to hide
+        });
+
+        // Form submission handling
+        document.getElementById('transactionForm').addEventListener('submit', function (event) {
+            // Collect form data for debugging (optional)
+            const transactionData = {
+                transactionDate: document.getElementById('transactionDate').value,
+                salesAgent: document.getElementById('salesAgent').value,
+                salesAgentNumber: document.getElementById('salesAgentnumber').value,
+                transactionType: document.getElementById('transactionType').value,
+                productName: document.getElementById('productName').value,
+                productNumber: document.getElementById('productNumber').value,
+                amount: document.getElementById('Amount').value,
+                customerNumber: document.getElementById('customerNumber').value,
+                customerName: document.getElementById('customerName').value,
+                payment: document.getElementById('payment').value,
+                price: document.getElementById('price').value,
+                paidAmount: document.getElementById('paidAmount').value,
+                remainingAmount: document.getElementById('remainingAmount').value
+            };
+
+            console.log(transactionData);
+
+            // Let the form submit to the server (remove preventDefault)
+            // Ensure the form is submitted to the correct Razor Page handler
+        });
+
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js">
+            
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

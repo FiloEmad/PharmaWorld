@@ -1,0 +1,151 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "الصفحة الرئيسية";
+}
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طلبات إجازة الموظفين</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #e3f2fd; /* Light blue background */
+            direction: rtl;
+        }
+
+        .intro {
+            padding-top: 30px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .table-container {
+            max-width: 100%;
+            margin: auto;
+        }
+
+        .table thead th {
+            background-color: #0d47a1; /* Dark blue for header */
+            color: #ffffff;
+            border-bottom: 2px solid #0a3d91;
+        }
+
+        .table tbody tr {
+            transition: background-color 0.2s;
+        }
+
+            .table tbody tr:nth-child(even) {
+                background-color: #e1f5fe; /* Very light blue for even rows */
+            }
+
+            .table tbody tr:hover {
+                background-color: #bbdefb; /* Light blue on hover */
+            }
+
+        .actions-col {
+            white-space: nowrap;
+            width: 1%;
+        }
+
+        .btn {
+            font-size: 0.85rem;
+            padding: 0.3rem 0.6rem;
+            display: inline-block;
+        }
+
+            .btn + .btn {
+                margin-left: 0.3rem;
+            }
+
+        .date-col {
+            width: 10%;
+        }
+
+        .btn-success {
+            background-color: #0277bd; /* Blue for Accept button */
+            border-color: #0277bd;
+        }
+
+        .btn-danger {
+            background-color: #b71c1c; /* Red for Reject button */
+            border-color: #b71c1c;
+        }
+    </style>
+</head>
+<body>
+    @await Html.PartialAsync("searchbar")
+
+    <section class="intro">
+        <div class="bg-image h-100">
+            <div class="mask d-flex align-items-center h-100">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12 table-container">
+                            <div class="card shadow-2-strong">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-borderless mb-0">
+                                            <thead class="text-center">
+                                                <tr>
+                                                    <th scope="col">رقم الطلب</th>
+                                                    <th scope="col">اسم الموظف</th>
+                                                    <th scope="col">رقم الموظف</th>
+                                                    <th scope="col">القسم</th>
+                                                    <th scope="col">السبب</th>
+                                                    <th scope="col" class="date-col">تاريخ البدء</th>
+                                                    <th scope="col">المدة (أيام)</th>
+                                                    <th scope="col" class="date-col">الأيام المتبقية</th>
+                                                    <th scope="col" class="actions-col">حالة الطلب</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="text-center align-middle">
+                                                <tr>
+                                                    <td>R-001</td>
+                                                    <td>تايجر نيكسون</td>
+                                                    <td>001</td>
+                                                    <td>هندسة الأنظمة</td>
+                                                    <td>إجازة طبية</td>
+                                                    <td class="date-col">2024-11-10</td>
+                                                    <td>10</td>
+                                                    <td class="date-col">4</td>
+                                                    <td class="actions-col">
+                                                        <button type="button" class="btn btn-success btn-sm">قبول</button>
+                                                        <button type="button" class="btn btn-danger btn-sm">رفض</button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>R-002</td>
+                                                    <td>سونيا فروست</td>
+                                                    <td>002</td>
+                                                    <td>هندسة البرمجيات</td>
+                                                    <td>ظرف عائلي</td>
+                                                    <td class="date-col">2024-11-12</td>
+                                                    <td>5</td>
+                                                    <td class="date-col">3</td>
+                                                    <td class="actions-col">
+                                                        <button type="button" class="btn btn-success btn-sm">قبول</button>
+                                                        <button type="button" class="btn btn-danger btn-sm">رفض</button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
